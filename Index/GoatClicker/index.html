@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Ryg : Goat Clicker</title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+    </head>
+    <body>
+        <div class="w3-container w3-padding w3-brown"><h2>RYG Code Showcase 2023</h2></div>
+        <div class="w3-bar">
+            <div class="w3-center w3-brown">
+                <a class="w3-button w3-brown" href="../">Go back</a>
+                <a class="w3-button w3-brown" href="About/">About</a>
+            </div>
+        </div>
+
+        <div class="w3-padding"></div>
+        <div class="w3-panel w3-red w3-padding w3-margin">Caution: This page may not be fully compatible with mobile devices.</div>
+        <div class="w3-card w3-margin">
+            <div class="w3-container w3-brown">
+                <h2>Goat Clicker</h2>
+            </div>
+            <div class="w3-container">
+                <div class="w3-container w3-padding w3-center">
+                    <a class="w3-button w3-brown w3-padding w3-round-large" href="https://play.google.com/store/apps/details?id=pw.xpazr.goatclicker" target="_blank" rel="noopener noreferrer">SEE FINISHED PRODUCT</a>
+                </div>
+                <div class="w3-padding">
+                    <p class="w3-panel w3-leftbar w3-light-grey">
+                        Goat Clicker is a very simple clicker game where you can click goats, and trade them... to get more goats! 
+                    </p>
+                    <small><i>Taken from <a href="https://play.google.com/store/apps/details?id=pw.xpazr.goatclicker" target="_blank" rel="noopener noreferrer">Google Play Store</a></i></small>
+                
+                    <p>Goat Clicker is a idle clicker-ish game I made with my low-end computer a year ago. The main goal of the game is get goats by clicking on the goat icon in the middle of the screen and add to your goat count as you click. Then, with the said collected goats, you can get shepherds and breeders to automatically gain goats for you.</p>
+                    <p>However, this app was a failure, because of the bugs. The app wouldn't run in the background without any thread permitted by the user, so getting those automatic miners were a waste.</p>
+                    <p>Another failure in the game was there wasn't any competition or difficulty in it, making the gameplay boring.</p>
+                    <p>Adding to the failure list, using Kotlin and the raw Android API wasn't useful for this project, and I made that failure too, a few months ago when I tried to make "Goat Clicker 2" using Flutter.</p>
+                    <p>This begs the question: If I had the chance, would I make "Goat Clicker 3"? And my answer would be, that, I don't know. Now I am an intermediate libGDX game developer and I've made much more complicated projects now. But I wouldn't, because the idea isn't worth it. There is much better games that applied this idea, like Cookie Clicker, where you would actually <i>want</i> to continue the game, not just press some buttons a few times and uninstall it.</p>
+                    <h4>Technical side</h4>
+                    <p>Enough literature if I have to say, let's take a look at how this game works.</p>
+                    <p>As I've stated, I made the game in my old computer and I probably don't have the source code anymore, so I will explain from similar code examples.</p>
+                    <p>I've used <code>SharedPreferences</code> to store the goat, shepherd and breeder count. The game would update every second using a thread to add to the goat count by getting the shepherd and breeder count, someting like this:</p>
+                    <div class="w3-panel">
+                        <pre>
+                            <code>
+val mainHandler = Handler(Looper.getMainLooper())
+    
+mainHandler.post(object : Runnable {
+    override fun run() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+            with (sharedPref.edit()) {
+                putInt("goats", getInt("goats") + (getInt("shepherd")*2 + getInt("breeder")*3))
+                apply()
+        }
+        mainHandler.postDelayed(this, 1000)
+    }
+})
+                            </code>
+                        </pre>
+                        
+                    </div>
+                    <p>Of course, as I've told, it was when I first started Kotlin, I didn't know much about proper coding.</p>
+                    <p>This is the main idea of the thread loop. For the clicking part, I've just attached a <code>onClickListener</code> to a <code>TextView</code> with the goat emoji, and made it increment the preference every click.</p>
+                    <p>If you have a similar idea to mine, please don't do what I did. There is better ways to implement this.</p>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
