@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Ryg : Hayat Çadıra Sığar</title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+    
+        <script>
+            function mouseenter(){
+                document.getElementById("finishedproduct").textContent = "NOT AVAILABLE";
+            }
+
+            function mouseleave(){
+                document.getElementById("finishedproduct").textContent = "SEE FINISHED PRODUCT";
+            }
+        </script>
+    </head>
+    <body>
+        <div class="w3-container w3-padding w3-brown"><h2>RYG Code Showcase 2023</h2></div>
+        <div class="w3-bar">
+            <div class="w3-center w3-brown">
+                <a class="w3-button w3-brown" href="../">Go back</a>
+                <a class="w3-button w3-brown" href="About/">About</a>
+            </div>
+        </div>
+
+        <div class="w3-padding"></div>
+        <div class="w3-panel w3-red w3-padding w3-margin">Caution: This page may not be fully compatible with mobile devices.</div>
+        <div class="w3-card w3-margin">
+            <div class="w3-container w3-brown">
+                <h2>Hayat Çadıra Sığar</h2>
+            </div>
+            <div class="w3-container">
+                <div class="w3-container w3-padding w3-center">
+                    <a id="finishedproduct" class="w3-button w3-disabled w3-brown w3-padding w3-round-large" onmouseenter="mouseenter()" onmouseleave="mouseleave()">SEE FINISHED PRODUCT</a>
+                </div>
+                <div class="w3-padding">
+                    <p>Hayat Çadıra Sığar is an app I made for a TÜBİTAK project last year in my school. The goal of the project was to make a product which would make use of an mathematical algorithm inside it. This project was a necessity after the earthquake in Turkey, so we had the idea to make an app that is similar to what was used by the government in the COVID pandemic.</p>
+                    <p>The goal of this app is to provide people who were affected by the earthquake to specify their status with a network nearby. There would be specific codes that were generated with the said algorithm that would be placed to notable and accessible places. This codes will then be entered to the designed app along with their Turkish Republic Identification Number which also uses a similar algorithm.</p>
+                    <p>This time, I actually have the source ready, so I can give examples based off the source code. There is two validation functions, as given below:</p>
+                    <div class="w3-code">
+                        <pre>
+fun validate_serial(value: String): Boolean{
+    // xxyyyyy
+    // xx - PLAKA KODU
+    // yy - SERİ KODU
+    // ((y + y + y + y) * 5) SON RAKAMI = y[5]
+                        
+    // 581234 ( ÖRNEK)
+    return ((value[2].digitToInt() + value[3].digitToInt() + value [4].digitToInt())*4)%10 == value.toInt()%10
+                        
+                        
+}
+                        
+fun validate_tckn(tc: String): Boolean {
+    val tcNumbers = tc.toCharArray().map { it.toString().toInt() }
+    if (tcNumbers.size != 11 || tcNumbers.distinct().size == 1) {
+        return false
+    }
+    val totalEven = tcNumbers.slice(0..8).filterIndexed { index, _ -> index % 2 == 0 }.sum()
+    val totalOdd = tcNumbers.slice(0..8).filterIndexed { index, _ -> index % 2 == 1 }.sum()
+    val tenthDigit = ((totalEven * 7) - totalOdd) % 10
+    val eleventhDigit = (tcNumbers.slice(0..9).sum() % 10)
+    return tcNumbers[9] == tenthDigit && tcNumbers[10] == eleventhDigit
+}
+                        </pre>
+                    </div>
+                    <p>The <code class="w3-codespan">validate_tckn</code> function is just a standart TRIN verification function. The <code class="w3-codespan">validate_serial</code> is the function I've used to validate the serial number. First, it sums the first 4 digits and multiplies the result by 5. If the last digit of that number is equal to the 5th digit of the serial code, then it's a pass. The validation script doesn't take the first 2 digits into account since they are the city plate code. If this code will be improved, this could also be added to the validation for extra security.</p>
+                    <p>The rest of the code is just a simple Android app, it gets the human readable name from the Flask server set up, and displays it. There are 4 boolean switches that indicate the user's needs. Every time any of them are updated, the data gets sent to the server.</p>
+                    <p>I did the front-end of the server in a rush, so it is not proper. It reads the JSON in the server with PHP, and there is a very small JavaScript code to reload the page every second. This could've been improved by getting the data with JavaScript and only changing the contents of the page, rather than reloading the whole page.</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
